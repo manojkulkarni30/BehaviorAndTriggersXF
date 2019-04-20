@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TBApp"
+             x:Class="TBApp.DataTriggerPage"
+             Title="Data Trigger"
+             Padding="10">
+    <StackLayout Orientation="Vertical">
+       
+        <Label Text="Name" FontSize="Medium">
+            <Label.Triggers>
+                <DataTrigger TargetType="Label"
+                             Binding="{Binding Source={x:Reference name},Path=Text.Length}" Value="0">
+                    <Setter Property="TextColor" Value="Red"></Setter>
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
+        
+        <Entry x:Name="name" Text="" HorizontalOptions="FillAndExpand"></Entry>
+
+    </StackLayout>
+
+</ContentPage>

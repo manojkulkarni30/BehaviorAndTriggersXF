@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TBApp.Behaviours"
+             xmlns:converter="clr-namespace:TBApp.Converters"
+             x:Class="TBApp.BehaviorPage"
+             Title="Behavior"
+             Padding="10"
+             BackgroundColor="WhiteSmoke">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:TextChangedEventArgsToTextInfoConverter x:Key="TextChangedEventArgsToTextInfoConverter"/>
+            <converter:ValueChangedEventArgsToValueInfoConverter x:Key="ValueChangedEventArgsToValueInfoConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Spacing="10">
+            <Label Text="Name" FontSize="Medium"/>
+
+            <Entry Placeholder="Enter The Name">
+                <Entry.Behaviors>
+                    <local:AlphabetValidationBehavior/>
+                </Entry.Behaviors>
+            </Entry>
+
+            <Label Text="{Binding SliderValue,StringFormat='Slider Value: {0}'}" FontSize="Medium"/>
+
+            <Label Text="{Binding Source={x:Reference sliderValue}, Path=Value, StringFormat='Slider Value: {0}'}" FontSize="Medium"/>
+
+            <Slider Maximum="100" HorizontalOptions="FillAndExpand" x:Name="sliderValue">
+                <Slider.Behaviors>
+                    <local:EventToCommandBehavior Command="{Binding SliderValueCommand}" 
+                                                  EventName="ValueChanged" 
+                                                  InputConverter="{StaticResource ValueChangedEventArgsToValueInfoConverter}"/>
+                </Slider.Behaviors>
+            </Slider>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

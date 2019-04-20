@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behavior="clr-namespace:TBApp.Behaviours"
+             xmlns:converter="clr-namespace:TBApp.Converters"
+             x:Class="TBApp.MainPage"
+             Title="Behaviors and Triggers">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ItemTappedEventArgsToItemInfoConverter x:Key="ItemTappedEventArgsToItemInfoConverter"/>
+
+            <x:Array Type="{x:Type x:String}" x:Key="ListItems">
+                <x:String>Property Trigger</x:String>
+                <x:String>Data Trigger</x:String>
+                <x:String>Event Trigger</x:String>
+                <x:String>Multi Trigger</x:String>
+                <x:String>Behavior</x:String>
+            </x:Array>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView ItemsSource="{StaticResource ListItems}" SeparatorVisibility="Default">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Spacing="5">
+                                <Label Margin="10" Text="{Binding .}" FontSize="Medium"></Label>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <ListView.Behaviors>
+                    <behavior:EventToCommandBehavior EventName="ItemTapped"
+                                                     Command="{Binding SelectedItemCommand}"
+                                                     InputConverter="{StaticResource ItemTappedEventArgsToItemInfoConverter}"/>
+                </ListView.Behaviors>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

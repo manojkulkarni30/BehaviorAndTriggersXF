@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TBApp.TriggerActions"
+             x:Class="TBApp.MultiTriggerPage"
+             Title="Multi Trigger"
+             Padding="10">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Label Text="Username" FontSize="Medium">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label"
+                             Binding="{Binding Source={x:Reference name},Path=Text.Length}" Value="0">
+                        <Setter Property="TextColor" Value="Red"></Setter>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+
+            <Entry x:Name="name" Text="" HorizontalOptions="FillAndExpand">
+                <Entry.Triggers>
+                    <EventTrigger Event="TextChanged">
+                        <local:AlphabetValidationTriggerAction/>
+                    </EventTrigger>
+                </Entry.Triggers>
+            </Entry>
+
+            <Label Text="Password" FontSize="Medium">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label"
+                             Binding="{Binding Source={x:Reference password},Path=Text.Length}" Value="0">
+                        <Setter Property="TextColor" Value="Red"></Setter>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+
+            <Entry x:Name="password" Text="" HorizontalOptions="FillAndExpand">
+                <Entry.Triggers>
+                    <EventTrigger Event="TextChanged">
+                        <local:AlphabetValidationTriggerAction/>
+                    </EventTrigger>
+                </Entry.Triggers>
+            </Entry>
+
+            <Button Text="Login" HorizontalOptions="FillAndExpand" IsEnabled="False">
+                <Button.Triggers>
+                    <MultiTrigger TargetType="Button">
+                        <MultiTrigger.Conditions>
+                            <BindingCondition Binding="{Binding Source={x:Reference name},Path=Text.Length}" Value="1"></BindingCondition>
+
+                            <BindingCondition Binding="{Binding Source={x:Reference password},Path=Text.Length}" Value="1"></BindingCondition>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="IsEnabled" Value="True"></Setter>
+                    </MultiTrigger>
+                </Button.Triggers>
+            </Button>
+
+        </StackLayout>
+        
+        
+    </ContentPage.Content>
+</ContentPage>
